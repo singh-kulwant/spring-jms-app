@@ -1,5 +1,6 @@
 package com.jms;
 
+import org.apache.activemq.ActiveMQConnectionFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jms.DefaultJmsListenerContainerFactoryConfigurer;
@@ -16,16 +17,20 @@ import javax.jms.ConnectionFactory;
 @SpringBootApplication
 public class SpringJmsAppApplication {
 
-	public static void main(String[] args) {
-		ConfigurableApplicationContext context = SpringApplication.run(SpringJmsAppApplication.class, args);
-		JmsTemplate jmsTemplate = context.getBean(JmsTemplate.class);
-		jmsTemplate.convertAndSend("order-queue", "Hello");
-	}
+    public static void main(String[] args) {
 
-	@Bean
-	public JmsListenerContainerFactory warehouseFactory(ConnectionFactory factory, DefaultJmsListenerContainerFactoryConfigurer configurer) {
- 		DefaultJmsListenerContainerFactory containerFactory = new DefaultJmsListenerContainerFactory();
-		configurer.configure(containerFactory,factory);
-		return containerFactory;
-	}
+        SpringApplication.run(SpringJmsAppApplication.class, args);
+        /*
+        ConfigurableApplicationContext context = SpringApplication.run(SpringJmsAppApplication.class, args);
+        Sender sender = context.getBean(Sender.class);
+        sender.sendMessage("order-queue", "Hello");
+        */
+    }
+
+    /*@Bean
+    public JmsListenerContainerFactory warehouseFactory(ConnectionFactory factory, DefaultJmsListenerContainerFactoryConfigurer configurer) {
+        DefaultJmsListenerContainerFactory containerFactory = new DefaultJmsListenerContainerFactory();
+        configurer.configure(containerFactory, factory);
+        return containerFactory;
+    }*/
 }
